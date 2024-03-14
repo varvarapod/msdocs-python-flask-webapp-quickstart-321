@@ -18,15 +18,23 @@ def favicon():
 
 @app.route('/hello', methods=['POST'])
 def hello():
-   name = request.form.get('name')
 
-   if name:
+    name = request.form.get('name')
+    movies = findsimilar(name)
+    if name:
        print('Request for hello page received with name=%s' % name)
-       return render_template('hello.html', name = name)
-   else:
+       return render_template('hello.html', name = name, movies = movies)
+    else:
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('index'))
 
+def findsimilar(movie):
+    # call dania function
+    # moviesList =  dania_code.similar(movie)
+    moviesList = {'Superman', 'Minions', 'Spider Man', 'IT'}
+    moviesList.add(movie)
+    moviesList.add('dracula')
+    return moviesList
 
 if __name__ == '__main__':
    app.run()
